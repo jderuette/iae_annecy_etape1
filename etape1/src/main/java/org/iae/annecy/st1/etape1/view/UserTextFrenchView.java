@@ -23,5 +23,7 @@ public class UserTextFrenchView implements StringView {
 
 		return textView;
 	}
+	
+	
 
 }
