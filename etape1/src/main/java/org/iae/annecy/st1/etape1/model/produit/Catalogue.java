@@ -21,27 +21,7 @@ public class Catalogue implements java.io.Serializable{
 	this.listeProduits.add(p);
 	save();
     }
-    
-    public String afficherCatalogue(){
-	String text = "";
-	int i = 1;
-	for (Produit produit : listeProduits) {
-	    text += i + ": " + produit.affichageProduit()+ "\n";
-	    i++;
-	}
-	return text;
-    }
-    
-    public String afficherCatComplet(){
-	String text = "";
-	int i = 1;
-	for (Produit produit : listeProduits) {
-	    text += i + ": " + produit.affichageProdComplet()+ "\n";
-	    i++;
-	}
-	return text;
-    }
-    
+        
     public Produit retrieveProduit (String reference){
 	Iterator<Produit> it = this.getListeProduits().iterator();
 	Produit prod = new Produit();
@@ -55,6 +35,7 @@ public class Catalogue implements java.io.Serializable{
 	return prod;
     }
     
+    @SuppressWarnings("resource")
     public void save(){
 	try{
 		FileOutputStream fos = new FileOutputStream("file");
@@ -67,25 +48,5 @@ public class Catalogue implements java.io.Serializable{
     
   
     
-//    @SuppressWarnings("unchecked")
-//    public ArrayList<Produit> deserialize(){
-//	ArrayList<Produit> listeP = new ArrayList<Produit>();    
-//	this.listeProduits = listeP;
-//	    try{
-//		FileInputStream fis = new FileInputStream("file");
-//		ObjectInputStream ois = new ObjectInputStream(fis);
-//		listeP = (ArrayList<Produit>) ois.readObject();
-//		ois.close();
-//		fis.close();
-//	    }catch(IOException ioe){
-//		ioe.printStackTrace();
-//		return listeP;
-//	    }catch(ClassNotFoundException c){
-//		System.out.println("Class not found");
-//		c.printStackTrace();
-//		return listeP;
-//	    }
-//	    return listeP;
-//	}
     
 }

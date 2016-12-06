@@ -4,6 +4,8 @@
 
 package org.iae.annecy.st1.tools;
 
+import org.iae.annecy.st1.etape1.view.menu.MenuView;
+
 /**
  * Classe utilitaire pour gérer les intération utilisateur via une console.
  * 
@@ -11,6 +13,7 @@ package org.iae.annecy.st1.tools;
  */
 public final class ConsoleHelper {
 
+    	static MenuView menu = new MenuView();
 	private ConsoleHelper() {
 
 	}
@@ -22,6 +25,6 @@ public final class ConsoleHelper {
 	 *            le message à afficher à l'utilisateur
 	 */
 	public static void display(final String mesage) {
-		System.out.println(mesage);
+	    menu.utilAff(mesage);
 	}
 }
