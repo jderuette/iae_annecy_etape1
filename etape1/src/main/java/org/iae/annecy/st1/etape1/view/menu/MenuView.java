@@ -5,25 +5,25 @@ public class MenuView{
     
     public void affichageMenu(){
 	String message = "**************MENU PRINCIPAL**************\n"
-		+ "1. Modifier un produit\n"
-		+ "2. Ajouter un produit\n"
-		+ "3. Afficher le catalogue";
+		+ "\t1. Modifier un produit\n"
+		+ "\t2. Ajouter un produit\n"
+		+ "\t3. Afficher le catalogue";
 	utilAff(message);
     }
     
     public void affichageCaracProduits(){
-        String message = "Vous souhaitez ..........\n"
-        	+ "1. Modifier le nom\n"
-        	+ "2. Modifier la description\n"
-        	+ "3. Modifier la description longue\n"
-        	+ "4. Modifier le prix";
+        String message = ".............. Vous souhaitez ..........\n"
+        	+ "\t1. Modifier le nom\n"
+        	+ "\t2. Modifier la description\n"
+        	+ "\t3. Modifier la description longue\n"
+        	+ "\t4. Modifier le prix";
 	utilAff(message);
     }
     
     public void afficherDescription(){
-	String message = "vous souhaitez afficher le catalogue...\n"
-		+ "1. Avec description courte\n"
-		+ "2. Avec description longue";
+	String message = "... vous souhaitez afficher le catalogue...\n"
+		+ "\t1. Avec description courte\n"
+		+ "\t2. Avec description longue";
 	utilAff(message);
     }
     
@@ -33,7 +33,7 @@ public class MenuView{
     }
     
     public void messageErreur(){
-        String message = "Commande invalide";
+        String message = "............... Commande invalide ...............";
 	utilAff(message);
     }
     

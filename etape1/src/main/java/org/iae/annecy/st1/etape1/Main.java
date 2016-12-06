@@ -9,15 +9,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Scanner;
 
-import org.iae.annecy.st1.common.mvc.DataView;
-import org.iae.annecy.st1.common.mvc.StringView;
 import org.iae.annecy.st1.etape1.controller.CatalogueController;
 import org.iae.annecy.st1.etape1.controller.MainController;
 import org.iae.annecy.st1.etape1.model.UserModel;
 import org.iae.annecy.st1.etape1.model.produit.Catalogue;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
-import org.iae.annecy.st1.etape1.view.UserTextFrenchView;
-import org.iae.annecy.st1.etape1.view.catalogue.CatalogueView;
 import org.iae.annecy.st1.etape1.view.menu.MenuView;
 
 /**
