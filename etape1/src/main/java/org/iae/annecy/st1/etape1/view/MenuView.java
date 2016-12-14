@@ -69,7 +69,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
     
-    public static void messageErreur(){
+    public void messageErreur(){
         String message = "Commande invalide, veuillez recommencer :";
         ConsoleHelper.display(message);
     }

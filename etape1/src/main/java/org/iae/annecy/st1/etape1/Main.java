@@ -46,8 +46,6 @@ public class Main {
      * COntroller pemetant le traitement des actions d'exemple.
      */
     private static MainController mainController;
-    private static Scanner scanner = new Scanner(System.in, "UTF-8");
-
     static {
 	Main.mainController = new MainController();
     }
@@ -115,67 +113,124 @@ public class Main {
 	
 
 
-	int choixMenu = 0;
-	int choixCat = 0;
-	String retour =" ";	
+	Integer choixMenu = 0;
+	Integer choixCat = 0;
+	Integer choixAttribut = 0;
+	Integer rep = 0;
+	String retour = "";
+	String str = "";
+	String refProduit = "";
+	String idCl = "";
+
+	Integer qteProd = 0;
+	String nom = "";
+	String prenom = "";
+	String id = "";
+	Panier panier = new Panier();
+
+	Integer numeroClient = null;
+	Double codePromo = null;
+	String idClient = "";
+	String nomClient = "";
+	String prenomClient = "";
+	String numClient = "";
+	String codeP = "";
+
+	String clientId = "";
+	Integer choixModif = 0;
 	
-	menu.afficherCatégorie();	
-//	gestionErreur(choixCat, 1, 4);
-	choixCat = scan.nextInt();
-	    
+	Integer choixDes = 0;
+
+	String ref = "";
+	String desc = "";
+	String descL = "";
+	Double prix = 0.0;
 	
-	//Gestion des erreurs In 
+	Double newPrix = (double) 0;
+	
+	
+	boolean erreur = true;
+	
+	menu.afficherCatégorie();
+		 
+	//Gestion des erreurs de saisie 
 	while(choixCat < 1 || choixCat > 4){
-	    menu.messageErreur();
-	    choixCat = scan.nextInt();
+	    erreur = true;
+	    while(erreur){ 
+		try{
+		    choixCat = scan.nextInt();
+		    if(choixCat < 1 || choixCat > 4){
+			menu.messageErreur();
+			erreur = true;
+		    }else
+			erreur = false;
+		}catch(InputMismatchException e){
+		    menu.messageErreur();
+		    str = scan.next();
+		}
+	    }
 	}
 	
 	//Si choix: responsable produit
 	switch(choixCat){
-	    case 1:
-		
+	    case 1:		
 		
 		//Gestion de demande de retour au menu principal
 		while(!retour.equals("n")){
 		    menu.affichageMenu(choixCat);
-//		    try{
-			choixMenu = scan.nextInt();
-//		    }catch(InputMismatchException e){
-//			menu.messageErreur();
-//		    }
-		    
-
-		  //Gestion des erreurs: choix invalide 
+		    		    
+		    //Gestion des erreurs de saisie 
 		    while(choixMenu < 1 || choixMenu > 4){
-			menu.messageErreur();
-			menu.affichageMenu(choixCat);
-			choixMenu = scan.nextInt();
+			erreur = true;
+			while(erreur){ 
+
+			    try{
+				choixMenu = scan.nextInt();
+				if(choixMenu < 1 || choixMenu > 4){
+				    menu.messageErreur();
+				    erreur = true;
+				}else
+				    erreur = false;
+			    }catch(InputMismatchException e){
+				menu.messageErreur();
+				str = scan.next();
+			    }
+			}
 		    }	
 		    
 		    switch (choixMenu) {
 			//Choix : modification d'un produit
 			case 1:
-			    String 	choixProduit = "";
-			    int 	choixAttribut = 0;
-			    
+			    			    
 			    ConsoleHelper.display(catController.get());
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit à modifier : ");
-			    choixProduit = scan.next();
+			    refProduit = scan.next();
 			    			    
 			    //Gestion des erreurs: mauvaise référence produit
-			    while(!choixProduit.equals(catController.getCat().retrieveProduit(choixProduit).getReference())){				
+			    while(!refProduit.equals(catController.getCat().retrieveProduit(refProduit).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
-				choixProduit = scan.next();
+				refProduit = scan.next();
 			    }
 			    
 			    menu.affichageCaracProduits();
-			    choixAttribut = scan.nextInt();
 			    
-			    //Gestion des erreurs: choix invalide
+			    //Gestion des erreurs de saisie 
 			    while(choixAttribut < 1 || choixAttribut > 4){
-				menu.messageErreur();
-				menu.affichageCaracProduits();
-				choixAttribut = scan.nextInt();
+				erreur = true;
+				while(erreur){ 
+
+				    try{
+					choixAttribut = scan.nextInt();
+					if(choixAttribut < 1 || choixAttribut > 4){
+					    menu.messageErreur();
+					    erreur = true;
+					}else
+					    erreur = false;
+				    }catch(InputMismatchException e){
+					menu.messageErreur();
+					str = scan.next();
+				    }
+				}
 			    }
 
 			    //Choix : caractéristique du produit à modifier
@@ -183,26 +238,41 @@ public class Main {
 				
 				case 1:
 				    ConsoleHelper.display("Veuillez rentrer le nouveau nom :");
-				    catController.getCat().retrieveProduit(choixProduit).setNom(scan.next());
+				    catController.getCat().retrieveProduit(refProduit).setNom(scan.next());
 				    break;
 				case 2:
 				    ConsoleHelper.display("Veuillez rentrer la nouvelle description :");
-				    catController.getCat().retrieveProduit(choixProduit).setDescritpion(scan.next());
+				    catController.getCat().retrieveProduit(refProduit).setDescritpion(scan.next());
 				    break;
 				case 3:
 				    ConsoleHelper.display("Veuillez rentrer la nouvelle description longue :");
 				    scan.nextLine();	//vider le Scanner
-				    catController.getCat().retrieveProduit(choixProduit).setDescripLongue(scan.nextLine());
+				    catController.getCat().retrieveProduit(refProduit).setDescripLongue(scan.nextLine());
 				    break;
 				case 4:
-				    Double newPrix = 0.0;
+				    
 				    ConsoleHelper.display("Veuillez rentrer le nouveau prix :");
-				    newPrix = scan.nextDouble();
-				    while(newPrix < 0){
-					ConsoleHelper.display("Veuillez rentrer un prix positif :");
-					newPrix = scan.nextDouble();
+//				    newPrix = scan.nextDouble();
+				    //Gestion des erreurs de saisie 
+				    while(newPrix <= 0 ){
+					erreur = true;
+					while(erreur){ 
+					    try{
+						newPrix = scan.nextDouble();
+						if(newPrix < 0 ){
+						    ConsoleHelper.display("Veuillez rentrer un prix positif :");
+						    erreur = true;
+						}else
+						    erreur = false;
+					    }catch(InputMismatchException e){
+						menu.messageErreur();
+						str = scan.next();
+					    }
+					}
 				    }
-				    catController.getCat().retrieveProduit(choixProduit).setPrix(newPrix);
+				    catController.getCat().retrieveProduit(refProduit).setPrix(newPrix);
+				    ConsoleHelper.display("Le nouveau prix du produit référence : " + catController.getCat().retrieveProduit(refProduit).getReference() +
+					    " est : " + newPrix + "€");
 				    break;
 				default:
 				    menu.messageErreur();
@@ -212,53 +282,79 @@ public class Main {
 			    break;
 
 			case 2:
+			    			    
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit : ");
-			    String ref = scan.next();
-
+			    ref = scan.next();
+			    
 			    while(ref.equals(catalogue.retrieveProduit(ref).getReference())){				
 				ConsoleHelper.display("Cette référence existe déjà, veuillez choisir une autre référence");
 				ref = scan.next();
 			    }
 
 			    ConsoleHelper.display("Veuillez rentrer le nom du produit : ");
-			    String nom = scan.next();
-			    scan.nextLine();
+			    nom = scan.next();
+			    scan.nextLine();	//vider le scanner
 			    ConsoleHelper.display("Veuillez rentrer la description du produit : ");
-			    String desc = scan.nextLine();
-			    ConsoleHelper.display("Veuillez rentrer le prix du produit : (ex : 9,99)");
-			    double prix = scan.nextDouble();
+			    desc = scan.nextLine();
+			    ConsoleHelper.display("Veuillez rentrer le prix du produit : (ex : 9,99)");			   
 
-			    while(prix < 0){
-				ConsoleHelper.display("Veuillez rentrer un prix positif :");
-				prix = scan.nextDouble();
+			    //Gestion des erreurs de saisie 
+			    while(prix <= 0 ){
+				erreur = true;
+				while(erreur){ 
+				    try{
+					prix = scan.nextDouble();
+					if(prix < 0 ){
+					    ConsoleHelper.display("Veuillez rentrer un prix positif :");
+					    erreur = true;
+					}else
+					    erreur = false;
+				    }catch(InputMismatchException e){
+					menu.messageErreur();
+					str = scan.next();
+				    }
+				}
 			    }
 
 			    scan.nextLine();
 			    ConsoleHelper.display("Veuillez rentrer la description longue du produit : ");
-			    String descL = scan.nextLine();			    
+			    descL = scan.nextLine();			    
 			    catalogue.ajouterProduit(new Produit(ref, nom, desc, descL, prix));
 			    ConsoleHelper.display("Récapitulatif du produit ajouté => référence :" + ref + "| Nom : " + nom + "| Description : " + desc + "| Prix : " + prix + "€| Description longue : " + descL);
 			    break;
-			case 3:			     
+			case 3:	
+			    			    
 			    ConsoleHelper.display(catController.get());
 			    ConsoleHelper.read(scan, "Veuillez rentrer la référence du produit à supprimer :");
-			    String refProd = scan.next();
-			    while(!refProd.equals(catController.getCat().retrieveProduit(refProd).getReference())){
+			    refProduit = scan.next();
+			    while(!refProduit.equals(catController.getCat().retrieveProduit(refProduit).getReference())){
 				ConsoleHelper.display("Cette référence produit n'existe pas, veuillez recommencer :");
-				refProd = scan.next();
+				refProduit = scan.next();
 			    }
-			    catController.getCat().supprimerProduit(catController.getCat().retrieveProduit(refProd));
-			    ConsoleHelper.display("Le produit référence : " + refProd + " a bien été supprimé.");
+			    catController.getCat().supprimerProduit(catController.getCat().retrieveProduit(refProduit));
+			    ConsoleHelper.display("Le produit référence : " + refProduit + " a bien été supprimé.");
 			    break;
 			case 4:
-			    int choixDes = 0;			
+			    			
 			    menu.afficherDescription();
-			    choixDes = scan.nextInt();
 
+			  //Gestion des erreurs de saisie 
 			    while(choixDes < 1 || choixDes > 2){
-				menu.messageErreur();
-				menu.afficherDescription();
-				choixDes = scan.nextInt();
+				erreur = true;
+				while(erreur){ 
+
+				    try{
+					choixDes = scan.nextInt();
+					if(choixDes < 1 || choixDes > 2){
+					    menu.messageErreur();
+					    erreur = true;
+					}else
+					    erreur = false;
+				    }catch(InputMismatchException e){
+					menu.messageErreur();
+					str = scan.next();
+				    }
+				}
 			    }	
 
 			    if(choixDes == 1)
@@ -281,29 +377,57 @@ public class Main {
 		retour = "";
 		while(!retour.equals("n")){
 		    menu.affichageMenu(choixCat);
-		    choixMenu = scan.nextInt();
 
+		    //Gestion des erreurs de saisie 
 		    while(choixMenu < 1 || choixMenu > 4){
-			menu.messageErreur();
-			menu.affichageMenu(choixCat);
-			choixMenu = scan.nextInt();
+			erreur = true;
+			while(erreur){ 
+
+			    try{
+				choixMenu = scan.nextInt();
+				if(choixMenu < 1 || choixMenu > 4){
+				    menu.messageErreur();
+				    erreur = true;
+				}else
+				    erreur = false;
+			    }catch(InputMismatchException e){
+				menu.messageErreur();
+				str = scan.next();
+			    }
+			}
 		    }	
 
 		    switch (choixMenu) {
 			case 1:
+			    			    
 			    ConsoleHelper.display(bddCont.get());
 			    ConsoleHelper.display("Quel est l'ID du client que vous souhaitez modifier ?");
-			    String clientId = scan.next();
+			    clientId = scan.next();
 			    while(!clientId.equals(bdd.retrieveClient(clientId).getId())){
 				ConsoleHelper.display("ID inconnu, veuillez recommencer");
 				clientId = scan.next();
 			    }
 			    menu.affichageCaracClients();
-			    Integer choixModif = scan.nextInt();
+			    
+			    //Gestion des erreurs de saisie 
 			    while(choixModif < 1 || choixModif > 4){
-				menu.messageErreur();
-				choixModif = scan.nextInt();
+				erreur = true;
+				while(erreur){ 
+
+				    try{
+					choixModif = scan.nextInt();
+					if(choixModif < 1 || choixModif > 4){
+					    menu.messageErreur();
+					    erreur = true;
+					}else
+					    erreur = false;
+				    }catch(InputMismatchException e){
+					menu.messageErreur();
+					str = scan.next();
+				    }
+				}
 			    }
+			    
 			    switch(choixModif){
 				case 1:
 				    ConsoleHelper.display("Veuillez rentrer le nouveau nom :");
@@ -323,22 +447,22 @@ public class Main {
 				    break;
 				default:
 				    menu.messageErreur();
+				    break;
 			    }
 			    break;
 
 			case 2:
-			    Integer numeroClient = null;
-			    Double codePromo = null;
+			    			    
 			    scan.nextLine();
-			    String idClient = ConsoleHelper.read(scan, "Quel est l'ID du client ?");
-			    String nomClient = ConsoleHelper.read(scan, "Quel est le nom du client ?");
-			    String prenomClient = ConsoleHelper.read(scan, "Quel est le prénom du client ?");
-			    String numClient = ConsoleHelper.read(scan, "Quel est le numéro du client ?");
+			    idClient = ConsoleHelper.read(scan, "Quel est l'ID du client ?");
+			    nomClient = ConsoleHelper.read(scan, "Quel est le nom du client ?");
+			    prenomClient = ConsoleHelper.read(scan, "Quel est le prénom du client ?");
+			    numClient = ConsoleHelper.read(scan, "Quel est le numéro du client ?");
 			    if(numClient.isEmpty())
 				numeroClient = null;
 			    else
 				numeroClient = Integer.parseInt(numClient);
-			    String codeP = ConsoleHelper.read(scan, "Quel est le code promotionnel du client ?");
+			    codeP = ConsoleHelper.read(scan, "Quel est le code promotionnel du client ?");
 			    if(codeP.isEmpty())
 				codePromo = 0.0;
 			    else
@@ -350,10 +474,11 @@ public class Main {
 				    "\n Numéro Client : " + numeroClient + 
 				    "\n Code Promotionnel : " + codePromo);
 			    break;
-			case 3:			     
+			case 3:
+			    			    
 			    ConsoleHelper.display(bddCont.get());
-			    ConsoleHelper.read(scan, "Veuillez rentrer l'ID du client à supprimer :");
-			    String id = scan.next();
+			    ConsoleHelper.display("Veuillez rentrer l'ID du client à supprimer :");
+			    id = scan.next();
 			    while(!id.equals(bddCont.getBdd().retrieveClient(id).getId())){
 				ConsoleHelper.display("Cet ID n'existe pas, veuillez recommencer :");
 				id = scan.next();
@@ -375,20 +500,21 @@ public class Main {
 
 	    case 3:
 		retour = "";
-		Integer qteProd = 0;
-		Panier panier = new Panier();
-		panierCont.setPanier(panier);
-		String nom = "", prenom = "", id = "";
+				
+		panierCont.setPanier(panier);		
 		ConsoleHelper.read(scan, "Veuillez rentrer votre nom :");
 		nom = scan.nextLine();
 		ConsoleHelper.display("Veuillez rentrer votre prénom :");	
 		prenom = scan.next();
+		
+		//Retrouve le compte d'un client à partir de ses nom et prénom
 		if(nom.equals(bddCont.getBdd().retrieveClient(nom, prenom).getNom()) 
 			|| prenom.equals(bddCont.getBdd().retrieveClient(nom, prenom).getPrenom())){
 		    ConsoleHelper.display(prenom + " " + nom + ", vous allez accéder à votre panier ....");
 		    bddCont.getBdd().retrieveClient(nom, prenom).setPanier(panier);
 		    
 		}
+		//Crée un compte pour le nouveau client
 		else{
 		    ConsoleHelper.display("Bienvenue " + prenom + " " + nom + ", votre compte vient d'être créé ...");
 		    id = String.valueOf(bddCont.getBdd().getBaseClients().size() + 1);
@@ -397,15 +523,35 @@ public class Main {
 		}
 		while(!retour.equals("n")){
 		    menu.affichageMenu(choixCat);
-		    choixMenu = scan.nextInt();
+		    
+		    //Gestion des erreurs de saisie 
+		    while(choixMenu < 1 || choixMenu > 4){
+			erreur = true;
+			while(erreur){ 
+
+			    try{
+				choixMenu = scan.nextInt();
+				if(choixMenu < 1 || choixMenu > 4){
+				    menu.messageErreur();
+				    erreur = true;
+				}else
+				    erreur = false;
+			    }catch(InputMismatchException e){
+				menu.messageErreur();
+				str = scan.next();
+			    }
+			}
+		    }
+		    
 		    switch(choixMenu){
 			case 1:
+			    			    
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit sélectionné :");
 			    ConsoleHelper.display(catController.get());
-			    String refProd = scan.next();
-			    while(!refProd.equals(catalogue.retrieveProduit(refProd).getReference())){				
+			    refProduit = scan.next();
+			    while(!refProduit.equals(catalogue.retrieveProduit(refProduit).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
-				refProd = scan.next();
+				refProduit = scan.next();
 			    }
 			    ConsoleHelper.display("Veuillez rentrer la quantité souhaitée :");
 			    qteProd = scan.nextInt();
@@ -413,14 +559,14 @@ public class Main {
 				ConsoleHelper.display("Erreur quantité, veuillez rentrer une quantité positive :");
 				qteProd = scan.nextInt();
 			    }
-			    if(!panier.getPanier().contains(catalogue.retrieveProduit(refProd))){
-				panier.add(catalogue.retrieveProduit(refProd));
-				catalogue.retrieveProduit(refProd).setQuantité(qteProd);
+			    if(!panier.getPanier().contains(catalogue.retrieveProduit(refProduit))){
+				panier.add(catalogue.retrieveProduit(refProduit));
+				catalogue.retrieveProduit(refProduit).setQuantité(qteProd);
 			    }
 			    else{
-				catalogue.retrieveProduit(refProd).setQuantité(catalogue.retrieveProduit(refProd).getQuantité() + qteProd);
+				catalogue.retrieveProduit(refProduit).setQuantité(catalogue.retrieveProduit(refProduit).getQuantité() + qteProd);
 			    }
-			    ConsoleHelper.display("Montant de votre réduction :" + (catalogue.retrieveProduit(refProd).getPrixTotal()
+			    ConsoleHelper.display("Montant de votre réduction :" + (catalogue.retrieveProduit(refProduit).getPrixTotal()
 				    * bddCont.getBdd().retrieveClient(nom, prenom).getCodePromo()/100));
 			    break;
 			case 2:
@@ -438,11 +584,26 @@ public class Main {
 			    break;
 			case 4:
 			    ConsoleHelper.read(scan, "Souhaitez-vous vraiment valider votre commande ? (1:OUI/2:NON)");
-			    Integer rep = scan.nextInt();
+			    			    
+			    //Gestion des erreurs de saisie 
 			    while(rep < 1 || rep > 2){
-				menu.messageErreur();
-				rep = scan.nextInt();
+				erreur = true;
+				while(erreur){ 
+
+				    try{
+					rep = scan.nextInt();
+					if(rep < 1 || rep > 2){
+					    menu.messageErreur();
+					    erreur = true;
+					}else
+					    erreur = false;
+				    }catch(InputMismatchException e){
+					menu.messageErreur();
+					str = scan.next();
+				    }
+				}
 			    }
+			    
 			    if(rep == 1){
 				ConsoleHelper.display("Commande validée");
 				panierCont.getPanier().valider(bddCont.getBdd().retrieveClient(nom, prenom));
@@ -457,6 +618,7 @@ public class Main {
 		    menu.afficherRetour();
 		    retour = scan.next();
 		}
+		bddCont.sauvegarder();
 		break;
 		
 	    case 4:
@@ -464,25 +626,40 @@ public class Main {
 		while(!retour.equals("n")){
 		    ConsoleHelper.display(bddCont.get());
 		    ConsoleHelper.display("Veuillez rentrer l'identifiant client à traiter :");
-		    String idCl = scan.next();
+		    idCl = scan.next();
 		    while(!idCl.equals(bdd.retrieveClient(idCl).getId())){
 			ConsoleHelper.display("ID inconnu, veuillez recommencer");
 			idCl = scan.next();
 		    }
 		    menu.affichageMenu(choixCat);
-		    choixMenu = scan.nextInt();	
+		    
+		    //Gestion des erreurs de saisie 
 		    while(choixMenu < 1 || choixMenu > 2){
-			menu.messageErreur();
-			choixMenu = scan.nextInt();
+			erreur = true;
+			while(erreur){ 
+
+			    try{
+				choixMenu = scan.nextInt();
+				if(choixMenu < 1 || choixMenu > 2){
+				    menu.messageErreur();
+				    erreur = true;
+				}else
+				    erreur = false;
+			    }catch(InputMismatchException e){
+				menu.messageErreur();
+				str = scan.next();
+			    }
+			}
 		    }
+		    
 		    switch(choixMenu){
 			case 1:
 			    ConsoleHelper.display(catController.get());
 			    ConsoleHelper.read(scan, "Veuillez rentrer la référence du produit sélectionné :");
-			    String refP = scan.next();
-			    while(!refP.equals(catalogue.retrieveProduit(refP).getReference())){				
+			    refProduit = scan.next();
+			    while(!refProduit.equals(catalogue.retrieveProduit(refProduit).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
-				refP = scan.next();
+				refProduit = scan.next();
 			    }
 			    ConsoleHelper.display("Veuillez rentrer la quantité souhaitée :");
 			    qteProd = scan.nextInt();
@@ -490,19 +667,19 @@ public class Main {
 				ConsoleHelper.display("Erreur quantité, veuillez rentrer une quantité positive :");
 				qteProd = scan.nextInt();
 			    }
-			    if(!bdd.retrieveClient(idCl).getPanier().contains(catalogue.retrieveProduit(refP))){
-				bdd.retrieveClient(idCl).getPanier().add(catalogue.retrieveProduit(refP));
-				catalogue.retrieveProduit(refP).setQuantité(qteProd);
+			    if(!bdd.retrieveClient(idCl).getPanier().contains(catalogue.retrieveProduit(refProduit))){
+				bdd.retrieveClient(idCl).getPanier().add(catalogue.retrieveProduit(refProduit));
+				catalogue.retrieveProduit(refProduit).setQuantité(qteProd);
 			    }
 			    else{
-				catalogue.retrieveProduit(refP).setQuantité(catalogue.retrieveProduit(refP).getQuantité() + qteProd);
+				catalogue.retrieveProduit(refProduit).setQuantité(catalogue.retrieveProduit(refProduit).getQuantité() + qteProd);
 			    }
 			    break;
 			case 2:
-			    ConsoleHelper.display(panierCont.getPanierView().afficherCommandes(bddCont.getBdd().retrieveClient(idCl)));
-			    
+			    ConsoleHelper.display(panierCont.getPanierView().afficherCommandes(bddCont.getBdd().retrieveClient(idCl)));			    
 			    break;
 			default:
+			    menu.messageErreur();
 			    break;
 		    }	
 		    bddCont.sauvegarder();
@@ -572,35 +749,4 @@ public class Main {
     //	    customerAddModel.register(mainController);
     //	}
     
-
-    public static void gestionErreur(Integer entree, Integer min, Integer max){
-	Integer entree2 = entree;
-	boolean erreur = true;
-	do{
-	    if(getScanner().hasNextInt()){
-		entree2 = getScanner().nextInt();
-		erreur = false;
-//		while(entree < min || entree > max){
-//		    MenuView.messageErreur();
-//		    gestionErreur(entree, min, max);
-//		}
-		
-	    }else{
-		MenuView.messageErreur();
-		getScanner().next();		
-	    }
-	    
-	}while(erreur);
-	ConsoleHelper.display(entree.toString());
-    }
-
-
-    public static Scanner getScanner() {
-	return scanner;
-    }
-
-
-    public static void setScanner(Scanner scanner) {
-	Main.scanner = scanner;
-    }
 }
