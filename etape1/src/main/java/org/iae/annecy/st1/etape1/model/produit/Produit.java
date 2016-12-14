@@ -3,7 +3,8 @@ package org.iae.annecy.st1.etape1.model.produit;
 public class Produit implements java.io.Serializable{
 
     private String reference, descritpion, nom, descripLongue;
-    private double prix;
+    private double prix, prixTotal;
+    private int quantité;
 
     public Produit(){
 	
@@ -61,10 +62,18 @@ public class Produit implements java.io.Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
+    public int getQuantité() {
+        return quantité;
+    }
+    public void setQuantité(int quantité) {
+        this.quantité = quantité;
+    }
+    public double getPrixTotal() {
+        return this.getPrix()*this.getQuantité();
+    }
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
+    }
     
-    
-    
-    
-    
-    
+        
 }

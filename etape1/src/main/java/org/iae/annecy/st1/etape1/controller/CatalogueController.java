@@ -1,7 +1,7 @@
 package org.iae.annecy.st1.etape1.controller;
 
 import org.iae.annecy.st1.etape1.model.produit.Catalogue;
-import org.iae.annecy.st1.etape1.view.catalogue.CatalogueView;
+import org.iae.annecy.st1.etape1.view.CatalogueView;
 
 public class CatalogueController implements java.io.Serializable{
 
@@ -26,12 +26,15 @@ public class CatalogueController implements java.io.Serializable{
     }
 
     public Catalogue getCat() {
-        return cat;
+        return this.cat;
     }
 
     public void setCat(Catalogue cat) {
         this.cat = cat;
     }
     
+    public void sauvegarder(){
+	cat.save();
+    }
     
 }

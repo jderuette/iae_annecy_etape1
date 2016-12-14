@@ -1,9 +1,8 @@
-package org.iae.annecy.st1.etape1.view.catalogue;
+package org.iae.annecy.st1.etape1.view;
 
 import org.iae.annecy.st1.etape1.controller.CatalogueController;
 import org.iae.annecy.st1.etape1.model.produit.Catalogue;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
-import org.iae.annecy.st1.etape1.view.produit.ProduitView;
 
 public class CatalogueView{
     

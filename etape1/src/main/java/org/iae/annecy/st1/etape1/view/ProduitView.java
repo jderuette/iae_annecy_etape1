@@ -1,4 +1,4 @@
-package org.iae.annecy.st1.etape1.view.produit;
+package org.iae.annecy.st1.etape1.view;
 
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 

@@ -21,6 +21,11 @@ public class Catalogue implements java.io.Serializable{
 	this.listeProduits.add(p);
 	save();
     }
+    
+    public void supprimerProduit(Produit p){
+	this.listeProduits.remove(p);
+	save();
+    }
         
     public Produit retrieveProduit (String reference){
 	Iterator<Produit> it = this.getListeProduits().iterator();
@@ -38,12 +43,12 @@ public class Catalogue implements java.io.Serializable{
     @SuppressWarnings("resource")
     public void save(){
 	try{
-		FileOutputStream fos = new FileOutputStream("file");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this);
+	    FileOutputStream fos = new FileOutputStream("etape1.ser");
+	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    oos.writeObject(this);
 	}catch (IOException ioe){
-		ioe.printStackTrace();
-	    }
+	    ioe.printStackTrace();
+	}
     }
     
   
