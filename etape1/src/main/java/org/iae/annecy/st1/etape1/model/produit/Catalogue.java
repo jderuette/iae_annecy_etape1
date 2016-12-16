@@ -28,7 +28,7 @@ public class Catalogue implements java.io.Serializable{
 	save();
     }
     
-    /*
+    /**
      * Permet de retrouver un produit à partir de sa référence
      * 
      * @param reference
@@ -48,7 +48,7 @@ public class Catalogue implements java.io.Serializable{
 	return prod;
     }
     
-    /*
+    /**
      * Sérialise le catalogue
      */
     @SuppressWarnings("resource")

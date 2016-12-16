@@ -93,7 +93,7 @@ public class Main {
 	boolean erreur = true;
 
 
-	menu.afficherCatégorie();
+	menu.afficherCategorie();
 
 	//Gestion des erreurs de saisie 
 	while(choixCat < 1 || choixCat > 4){

@@ -11,7 +11,7 @@ public class CatalogueView{
 	super();
     }
     
-    /*
+    /**
      * Affiche le catalogue avec toutes les caractéristiques des produits sauf 
      * la description longue
      * 
@@ -29,7 +29,7 @@ public class CatalogueView{
 	return text;
     }
     
-    /*
+    /**
      * Affiche le catalogue avec toutes les caractéristiques des produits
      * 
      * @param catalogue

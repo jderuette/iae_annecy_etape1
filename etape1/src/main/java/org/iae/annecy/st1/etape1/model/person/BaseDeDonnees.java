@@ -30,7 +30,7 @@ public class BaseDeDonnees implements Serializable{
 	saveBdd();
     }
 
-    /*
+    /**
      * Permet de retrouver un client à partir de son ID
      * 
      * @param id
@@ -50,7 +50,7 @@ public class BaseDeDonnees implements Serializable{
 	return client;
     }
 
-    /*
+    /**
      * Permet de retrouver un client à partir de ses nom et prénom
      * 
      * @param nom, prenom
@@ -72,7 +72,7 @@ public class BaseDeDonnees implements Serializable{
 	return client;
     }
 
-    /*
+    /**
      * Sérialise la base de données clients
      */
     @SuppressWarnings("resource")

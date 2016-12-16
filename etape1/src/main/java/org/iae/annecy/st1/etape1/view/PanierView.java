@@ -10,7 +10,7 @@ public class PanierView{
 	super();
     }
     
-    /*
+    /**
      * Affiche le panier avant validation
      * 
      * @param p
@@ -21,14 +21,14 @@ public class PanierView{
 	String text = "Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit :\n";
 	double total = 0;
 	for (Produit produit : p.getPanier()) {
-	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantité() + "\t\t" + 
-		    + produit.getQuantité()*produit.getPrix() + "€\n";
-	    total += produit.getQuantité()*produit.getPrix();
+	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantite() + "\t\t" + 
+		    + produit.getQuantite()*produit.getPrix() + "€\n";
+	    total += produit.getQuantite()*produit.getPrix();
 	}
 	text += "\nMontant total du panier avant réduction : " + total + "€";
 	return text;
     }
-    /*
+    /**
      * Affiche le panier qui a été validé
      * 
      * @param p
@@ -38,8 +38,8 @@ public class PanierView{
     public String afficherCommandes(Person p){
 	String text = "Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit :\n";
 	for (Produit produit : p.getPanier()) {
-	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantité() + "\t\t" + 
-		    + produit.getQuantité()*produit.getPrix() + "€\n";
+	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantite() + "\t\t" + 
+		    + produit.getQuantite()*produit.getPrix() + "€\n";
 	}
 	return text;
     }

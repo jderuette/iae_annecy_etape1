@@ -1,0 +1,10 @@
+org.iae.annecy.st1.common.mvc
+org.iae.annecy.st1.etape1
+org.iae.annecy.st1.etape1.controller
+org.iae.annecy.st1.etape1.model
+org.iae.annecy.st1.etape1.model.panier
+org.iae.annecy.st1.etape1.model.person
+org.iae.annecy.st1.etape1.model.produit
+org.iae.annecy.st1.etape1.view
+org.iae.annecy.st1.etape1.view.person
+org.iae.annecy.st1.tools

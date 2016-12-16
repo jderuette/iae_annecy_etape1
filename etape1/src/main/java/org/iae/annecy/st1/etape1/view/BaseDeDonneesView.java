@@ -12,6 +12,13 @@ public class BaseDeDonneesView{
 	super();
     }
     
+    /**
+     * Affiche la liste des clients avec leurs caractéristiques
+     * 
+     * @param bdd
+     * 		la base de données dans laquelle sont enregistrés les clients
+     * @return la liste des clients avec leurs caractéristiques sous forme de chaine de texte
+     */
     public String afficherBdd(BaseDeDonnees bdd){
 	String text = "";
 	for (Person client : bdd.getBaseClients()) {

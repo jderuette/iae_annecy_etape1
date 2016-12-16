@@ -83,7 +83,7 @@ public class Person implements Serializable{
         this.panier = panier;
     }
 
-    /*
+    /**
      * Calcule le montant total du panier
      * 
      * @return Un nombre (double)
@@ -91,7 +91,7 @@ public class Person implements Serializable{
     public double montantPanier(){
 	double total = 0;
 	for (Produit produit : this.getPanier()) {
-	    total += produit.getQuantité()*produit.getPrix();
+	    total += produit.getQuantite()*produit.getPrix();
 	}
 	return total;
     }    

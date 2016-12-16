@@ -36,7 +36,7 @@ public class BaseDeDonneesController implements Serializable{
 	bdd.saveBdd();
     }
 
-    /*
+    /**
      * Permet de retrouver un client à partir de ses nom et prénom 
      * 		===> sensible à la casse
      * 

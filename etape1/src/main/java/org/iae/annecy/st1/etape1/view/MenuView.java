@@ -4,7 +4,7 @@ import org.iae.annecy.st1.tools.ConsoleHelper;
 
 public class MenuView{
 
-    /*
+    /**
      * Affiche les menus principaux suivant le rôle de la personne
      * 
      * @param cat
@@ -48,7 +48,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu pour choisir la caractéristique du produit à modifier
      */
     public void affichageCaracProduits(){
@@ -60,7 +60,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu de gestion du panier pour le client
      */
     public void affichagePanier(){
@@ -72,7 +72,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu pour choisir entre l'affiche de la description
      * courte ou longue des produits
      */
@@ -83,7 +83,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu pour retourner au menu principal
      * ou quitter le programme
      */
@@ -92,7 +92,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche un message d'erreur
      */
     public void messageErreur(){
@@ -100,7 +100,7 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu pour modifier une caractéristique d'un client pour
      * le responsable clientèle
      */
@@ -113,10 +113,10 @@ public class MenuView{
 	ConsoleHelper.display(message);
     }
 
-    /*
+    /**
      * Affiche le menu de démarrage qui permet de préciser notre rôle
      */
-    public void afficherCatégorie(){
+    public void afficherCategorie(){
 	String message = "*********VOUS ETES***********\n"
 		+ "\t1. Responsable produit\n"
 		+ "\t2. Responsable clientèle\n"
