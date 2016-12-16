@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import org.iae.annecy.st1.etape1.model.person.Person;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 
+@SuppressWarnings("serial")
 public class Panier implements Serializable{
 
     private ArrayList<Produit> panier = new ArrayList<Produit>();
+    private Person client = new Person();
 
     public ArrayList<Produit> getPanier() {
-        return panier;
+	return panier;
     }
 
     public void setPanier(ArrayList<Produit> panier) {
@@ -21,14 +23,17 @@ public class Panier implements Serializable{
     public void add(Produit produit){
 	this.panier.add(produit);
     }
-    
-    public void valider(Person p){
-	p.setPanier(panier);
+
+    public Person getClient() {
+	return this.client;
     }
-    
-//    public void save(Person p){
-//	this.client = p;
-//	p.setPanier(this);
-//    }
-    
+
+    public void setClient(Person client) {
+	this.client = client;
+    }
+
+    public void supprimerProduit(Produit produit){
+	this.panier.remove(produit);
+    }
+
 }

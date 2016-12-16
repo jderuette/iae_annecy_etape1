@@ -3,11 +3,10 @@ package org.iae.annecy.st1.etape1.model.person;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.iae.annecy.st1.common.mvc.AbstractDataView;
-import org.iae.annecy.st1.etape1.model.panier.Panier;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 
-public class Person extends AbstractDataView implements Serializable{
+@SuppressWarnings("serial")
+public class Person implements Serializable{
 
     private String id;
     private String nom;
@@ -15,8 +14,7 @@ public class Person extends AbstractDataView implements Serializable{
     private Integer numero;
     private double codePromo;
     private ArrayList<Produit> panier = new ArrayList<Produit>();
-    private Panier panier2;
-
+    
     public Person(){
 	super();
     }
@@ -36,21 +34,6 @@ public class Person extends AbstractDataView implements Serializable{
 	this.numero = numero;
 	this.codePromo = codePromo;
     }
-
-    // public Person(DataView datas){
-    // this.id = datas.getData("id");
-    // this.prenom = datas.getData("prenom");
-    // this.nom = datas.getData("nom");
-    // }
-
-    // public DataView asDataView() {
-    // DataView datas = new BasicDataView();
-    // datas.add("id", id.toString());
-    // datas.add("nom", nom);
-    // datas.add("prenom", prenom);
-    //
-    // return datas;
-    // }
 
     public String getId() {
 	return id;
@@ -100,16 +83,17 @@ public class Person extends AbstractDataView implements Serializable{
         this.panier = panier;
     }
 
-    public double montantPanier(Panier panier){
+    /*
+     * Calcule le montant total du panier
+     * 
+     * @return Un nombre (double)
+     */
+    public double montantPanier(){
 	double total = 0;
-	for (Produit produit : panier.getPanier()) {
+	for (Produit produit : this.getPanier()) {
 	    total += produit.getQuantité()*produit.getPrix();
 	}
 	return total;
-    }
-
-    public void setPanier(Panier panier) {
-	// TODO Auto-generated method stub
-	this.panier2 = panier;
-    }
+    }    
+ 
 }

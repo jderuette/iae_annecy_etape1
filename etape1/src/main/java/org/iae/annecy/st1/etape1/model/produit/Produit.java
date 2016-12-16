@@ -1,20 +1,22 @@
 package org.iae.annecy.st1.etape1.model.produit;
 
+@SuppressWarnings("serial")
 public class Produit implements java.io.Serializable{
 
     private String reference, descritpion, nom, descripLongue;
-    private double prix, prixTotal;
-    private int quantité;
+    private double prix;
+    private int quantite;
 
-    public Produit(){
-	
+    public Produit(){	
     }
+
     public Produit(String reference,String nom, String description, double prix){
 	this.reference = reference;
 	this.nom = nom;
 	this.descritpion = description;
 	this.prix = prix;
     }
+
     public Produit(String reference,String nom, String description, String descL, double prix){
 	this.reference = reference;
 	this.nom = nom;
@@ -22,58 +24,51 @@ public class Produit implements java.io.Serializable{
 	this.descripLongue = descL;
 	this.prix = prix;
     }
-    
+
     public double getPrix() {
-        return prix;
+	return prix;
     }
 
     public void setPrix(double prix) {
-        this.prix = prix;
+	this.prix = prix;
     }
 
     public String getReference() {
-        return reference;
+	return reference;
     }
 
     public void setReference(String reference) {
-        this.reference = reference;
+	this.reference = reference;
     }
 
     public String getDescritpion() {
-        return descritpion;
+	return descritpion;
     }
 
     public void setDescritpion(String descritpion) {
-        this.descritpion = descritpion;
+	this.descritpion = descritpion;
     }
-    
+
     public String getDescripLongue() {
-        return descripLongue;
+	return descripLongue;
     }
-    
+
     public void setDescripLongue(String descripLongue) {
-        this.descripLongue = descripLongue;
+	this.descripLongue = descripLongue;
     }
-    
+
     public String getNom() {
-        return nom;
+	return nom;
     }
-    
+
     public void setNom(String nom) {
-        this.nom = nom;
+	this.nom = nom;
     }
-    public int getQuantité() {
-        return quantité;
+    public int getQuantite() {
+	return quantite;
     }
-    public void setQuantité(int quantité) {
-        this.quantité = quantité;
-    }
-    public double getPrixTotal() {
-        return this.getPrix()*this.getQuantité();
-    }
-    public void setPrixTotal(double prixTotal) {
-        this.prixTotal = prixTotal;
-    }
-    
-        
+    public void setQuantite(int quantite) {
+	this.quantite = quantite;
+    }    
+
 }

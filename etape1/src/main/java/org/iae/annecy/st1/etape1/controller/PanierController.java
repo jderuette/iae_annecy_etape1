@@ -9,7 +9,7 @@ public class PanierController{
     private PanierView panierView = new PanierView(this);
     
     public String get(){
-	return panierView.afficherPanier(panier);
+	return panierView.afficherPanier(panier.getClient());
     }
 
     public PanierView getPanierView() {
@@ -21,11 +21,10 @@ public class PanierController{
     }
 
     public Panier getPanier() {
-        return panier;
+        return this.panier;
     }
 
     public void setPanier(Panier panier) {
         this.panier = panier;
-    }   
-    
+    }  
 }

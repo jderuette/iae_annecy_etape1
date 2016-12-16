@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+@SuppressWarnings("serial")
 public class Catalogue implements java.io.Serializable{
 
     private ArrayList<Produit> listeProduits = new ArrayList<Produit>();   
@@ -26,7 +27,14 @@ public class Catalogue implements java.io.Serializable{
 	this.listeProduits.remove(p);
 	save();
     }
-        
+    
+    /*
+     * Permet de retrouver un produit à partir de sa référence
+     * 
+     * @param reference
+     * 		la référence du produit à retrouver
+     * @return Un produit
+     */
     public Produit retrieveProduit (String reference){
 	Iterator<Produit> it = this.getListeProduits().iterator();
 	Produit prod = new Produit();
@@ -40,18 +48,18 @@ public class Catalogue implements java.io.Serializable{
 	return prod;
     }
     
+    /*
+     * Sérialise le catalogue
+     */
     @SuppressWarnings("resource")
     public void save(){
 	try{
-	    FileOutputStream fos = new FileOutputStream("etape1.ser");
+	    FileOutputStream fos = new FileOutputStream("catalogue.ser");
 	    ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    oos.writeObject(this);
 	}catch (IOException ioe){
 	    ioe.printStackTrace();
 	}
-    }
-    
-  
-    
+    }    
     
 }

@@ -7,31 +7,36 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.iae.annecy.st1.etape1.model.panier.Panier;
-
+@SuppressWarnings("serial")
 public class BaseDeDonnees implements Serializable{
 
     private ArrayList<Person> baseClients = new ArrayList<Person>();
-    private Panier panier = new Panier();
 
     public ArrayList<Person> getBaseClients() {
-        return baseClients;
+	return baseClients;
     }
 
     public void setBaseClients(ArrayList<Person> baseClients) {
-        this.baseClients = baseClients;
+	this.baseClients = baseClients;
     }
-    
+
     public void ajouterClient(Person p){	
 	this.baseClients.add(p);
 	saveBdd();
     }
-    
+
     public void supprimerClient(Person p){
 	this.baseClients.remove(p);
 	saveBdd();
     }
-        
+
+    /*
+     * Permet de retrouver un client à partir de son ID
+     * 
+     * @param id
+     * 		id du client à retrouver
+     * @return Un client
+     */
     public Person retrieveClient (String id){
 	Iterator<Person> it = this.getBaseClients().iterator();
 	Person client = new Person();
@@ -44,7 +49,16 @@ public class BaseDeDonnees implements Serializable{
 	}
 	return client;
     }
-    
+
+    /*
+     * Permet de retrouver un client à partir de ses nom et prénom
+     * 
+     * @param nom, prenom
+     * 		nom du client à retrouver
+     * 		prénom du client à retrouver
+     * 
+     * @return Un client 
+     */
     public Person retrieveClient (String nom, String prenom){
 	Iterator<Person> it = this.getBaseClients().iterator();
 	Person client = new Person();
@@ -57,11 +71,14 @@ public class BaseDeDonnees implements Serializable{
 	}
 	return client;
     }
-    
+
+    /*
+     * Sérialise la base de données clients
+     */
+    @SuppressWarnings("resource")
     public void saveBdd(){
 	try{
-	    FileOutputStream fos = new FileOutputStream("etape1.ser");
-	    @SuppressWarnings("resource")
+	    FileOutputStream fos = new FileOutputStream("clients.ser");
 	    ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    oos.writeObject(this);
 	}catch (IOException ioe){
@@ -69,5 +86,4 @@ public class BaseDeDonnees implements Serializable{
 	}
     }
 
-    
 }

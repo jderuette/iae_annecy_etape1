@@ -11,6 +11,14 @@ public class CatalogueView{
 	super();
     }
     
+    /*
+     * Affiche le catalogue avec toutes les caractéristiques des produits sauf 
+     * la description longue
+     * 
+     * @param catalogue
+     * 		le catalogue qui contient la liste des produits
+     * @return La liste des produits contenus dans le catalogue
+     */
     public String afficherCatalogue(Catalogue catalogue){
 	String text = "";
 	int i = 1;
@@ -21,6 +29,13 @@ public class CatalogueView{
 	return text;
     }
     
+    /*
+     * Affiche le catalogue avec toutes les caractéristiques des produits
+     * 
+     * @param catalogue
+     * 		le catalogue qui contient la liste des produits
+     * @return La liste des produits contenus dans le catalogue
+     */
     public String afficherCatComplet(Catalogue catalogue){
 	String text = "";
 	int i = 1;
