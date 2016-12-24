@@ -4,6 +4,10 @@
 
 package org.iae.annecy.st1.etape1;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.iae.annecy.st1.common.mvc.BasicDataParam;
@@ -13,6 +17,7 @@ import org.iae.annecy.st1.common.mvc.DataView;
 import org.iae.annecy.st1.common.mvc.StringView;
 import org.iae.annecy.st1.etape1.controller.MainController;
 import org.iae.annecy.st1.etape1.model.UserModel;
+import org.iae.annecy.st1.etape1.model.person.Person;
 import org.iae.annecy.st1.etape1.model.person.PersonAddModel;
 import org.iae.annecy.st1.etape1.model.person.PersonGetModel;
 import org.iae.annecy.st1.etape1.view.UserTextFrenchView;
@@ -46,6 +51,7 @@ public class Main {
 	public static void main(final String[] args) {
 		initUserModel();
 		initCustomerModel();
+		annuaireTest();
 		
 		final Scanner scan = new Scanner(System.in, "UTF-8");
 
@@ -85,6 +91,36 @@ public class Main {
 		final StringView customerAddViewBulk = new PersonAddFrenchView();
 		
 		ConsoleHelper.display(customerAddViewBulk.build(customerAddDataBulk));
+		
+	}
+
+	private static void annuaireTest() {
+		Map<Integer, List<Person>> groupes = new HashMap<Integer, List<Person>>();
+		Person p1 = new Person();
+		p1.setId(1);
+		p1.setNom("DERUETTE");
+		p1.setPrenom("Jérémie");
+		
+		Person p2 = new Person();
+		p2.setId(2);
+		p2.setNom("VANOTTI");
+		p2.setPrenom("Marion");
+		
+		List<Person> humains = new ArrayList<Person>();
+		humains.add(p1);
+		humains.add(p2);
+		
+		List<Person> professeurs = new ArrayList<Person>();
+		professeurs.add(p1);
+		
+		List<Person> eleves = new ArrayList<Person>();
+		eleves.add(p2);
+		
+		groupes.put(1, humains);
+		groupes.put(48, professeurs);
+		groupes.put(5, eleves);
+		
+		ConsoleHelper.display("Mon anuaire" + groupes);
 		
 	}
 
