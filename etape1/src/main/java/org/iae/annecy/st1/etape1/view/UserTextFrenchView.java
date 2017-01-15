@@ -14,14 +14,16 @@ import org.iae.annecy.st1.common.mvc.StringView;
  */
 public class UserTextFrenchView implements StringView {
 
-	/**
-	 * Renvoie une representation en text brute d'un utilsiateur.
-	 */
-	public String build(final DataView datas) {
+    /**
+     * Renvoie une representation en text brute d'un utilsiateur.
+     */
+    public String build(final DataView datas) {
 
-		final String textView = "Votre nom : " + datas.getData("name");
+	final String textView = "Votre nom : " + datas.getData("name");
 
-		return textView;
-	}
+	return textView;
+    }
+
+
 
 }
