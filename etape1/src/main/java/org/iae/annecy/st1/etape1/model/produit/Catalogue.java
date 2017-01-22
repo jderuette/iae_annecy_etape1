@@ -6,9 +6,12 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-@SuppressWarnings("serial")
 public class Catalogue implements java.io.Serializable{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5818676778770348692L;
     private ArrayList<Produit> listeProduits = new ArrayList<Produit>();   
     
     public ArrayList<Produit> getListeProduits() {
@@ -51,14 +54,22 @@ public class Catalogue implements java.io.Serializable{
     /**
      * Sérialise le catalogue
      */
-    @SuppressWarnings("resource")
+  
     public void save(){
+	ObjectOutputStream oos = null;
 	try{
 	    FileOutputStream fos = new FileOutputStream("catalogue.ser");
-	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    oos = new ObjectOutputStream(fos);
 	    oos.writeObject(this);
 	}catch (IOException ioe){
 	    ioe.printStackTrace();
+	}finally {
+	    try {
+		oos.close();
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	}
     }    
     

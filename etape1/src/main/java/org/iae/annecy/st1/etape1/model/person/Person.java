@@ -3,17 +3,20 @@ package org.iae.annecy.st1.etape1.model.person;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.iae.annecy.st1.etape1.model.produit.Produit;
+import org.iae.annecy.st1.etape1.model.panier.Item;
 
-@SuppressWarnings("serial")
 public class Person implements Serializable{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6173027789716365962L;
     private String id;
     private String nom;
     private String prenom;
     private Integer numero;
-    private double codePromo;
-    private ArrayList<Produit> panier = new ArrayList<Produit>();
+    private Double codePromo;
+    private ArrayList<Item> panier = new ArrayList<Item>();
     
     public Person(){
 	super();
@@ -26,7 +29,7 @@ public class Person implements Serializable{
 	this.prenom = prenom;
     }
 
-    public Person(String id, String nom, String prenom, Integer numero, double codePromo){
+    public Person(String id, String nom, String prenom, Integer numero, Double codePromo){
 	super();
 	this.id = id;
 	this.nom = nom;
@@ -67,7 +70,7 @@ public class Person implements Serializable{
 	this.numero = numero;
     }
 
-    public double getCodePromo() {
+    public Double getCodePromo() {
 	return codePromo;
     }
 
@@ -75,11 +78,11 @@ public class Person implements Serializable{
 	this.codePromo = codePromo;
     }
 
-    public ArrayList<Produit> getPanier() {
+    public ArrayList<Item> getPanier() {
         return panier;
     }
 
-    public void setPanier(ArrayList<Produit> panier) {
+    public void setPanier(ArrayList<Item> panier) {
         this.panier = panier;
     }
 
@@ -88,10 +91,10 @@ public class Person implements Serializable{
      * 
      * @return Un nombre (double)
      */
-    public double montantPanier(){
-	double total = 0;
-	for (Produit produit : this.getPanier()) {
-	    total += produit.getQuantite()*produit.getPrix();
+    public Double montantPanier(){
+	Double total = 0.0;
+	for (Item item : this.getPanier()) {
+	    total += item.getQuantite()*item.getProduit().getPrix();
 	}
 	return total;
     }    

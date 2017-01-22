@@ -11,14 +11,15 @@ import java.io.ObjectInputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import org.iae.annecy.st1.etape1.controller.BaseDeDonneesController;
-import org.iae.annecy.st1.etape1.controller.CatalogueController;
-import org.iae.annecy.st1.etape1.controller.PanierController;
+import org.iae.annecy.st1.etape1.model.panier.Panier;
 import org.iae.annecy.st1.etape1.model.person.BaseDeDonnees;
 import org.iae.annecy.st1.etape1.model.person.Person;
 import org.iae.annecy.st1.etape1.model.produit.Catalogue;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
+import org.iae.annecy.st1.etape1.view.BaseDeDonneesView;
+import org.iae.annecy.st1.etape1.view.CatalogueView;
 import org.iae.annecy.st1.etape1.view.MenuView;
+import org.iae.annecy.st1.etape1.view.PanierView;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
 /**
@@ -40,16 +41,19 @@ public class Main {
 
 	Scanner scan = new Scanner(System.in, "UTF-8");	
 
-	final Produit p1 = new Produit("aaaa", "chaise", "blabla", 3.00);
-	final Produit p2 = new Produit("bbbb", "bureau", "nduezbf", 4.05);
-	p1.setDescripLongue("Cette chaise est la toute nouvelle chaise hyper ergonomique qui vous permet de ne plus avoir mal aux fesses quand vous restez assis pendant des heures");
-	p2.setDescripLongue("Ce bureau rendra tous vos collègues jaloux, croyez-nous sur parole!");
+	final Produit prod1 = new Produit("aaaa", "chaise", "blabla", 3.00);
+	final Produit prod2 = new Produit("bbbb", "bureau", "nduezbf", 4.05);
+	prod1.setDescripLongue("Cette chaise est la toute nouvelle chaise hyper ergonomique qui vous permet de ne plus avoir mal aux fesses quand vous restez assis pendant des heures");
+	prod2.setDescripLongue("Ce bureau rendra tous vos collègues jaloux, croyez-nous sur parole!");
 	Person pers1 = new Person("1", "Chanrion", "Skivana");
 	Person pers2 = new Person("2", "Barjoux", "Mélodie");
 
 	BaseDeDonnees bdd = null;
 	Catalogue catalogue = null;
 	MenuView menu = new MenuView();
+	PanierView panierView = new PanierView();
+	CatalogueView catView = new CatalogueView();
+	BaseDeDonneesView bddView = new BaseDeDonneesView();
 
 	/**
 	 * Désérialisation du catalogue
@@ -62,8 +66,8 @@ public class Main {
 	    ois.close();
 	}catch(FileNotFoundException e){
 	    catalogue = new Catalogue();
-	    catalogue.ajouterProduit(p1);
-	    catalogue.ajouterProduit(p2);
+	    catalogue.ajouterProduit(prod1);
+	    catalogue.ajouterProduit(prod2);
 	}
 
 	/**
@@ -81,11 +85,7 @@ public class Main {
 	    bdd.ajouterClient(pers2);
 	}	    
 
-	CatalogueController catController = new CatalogueController();
-	catController.setCat(catalogue);
-	BaseDeDonneesController bddCont = new BaseDeDonneesController();
-	bddCont.setBdd(bdd);
-	PanierController panierCont = new PanierController();
+	
 
 	Integer choixMenu = 0;
 	Integer choixCat = 0;	
@@ -146,12 +146,12 @@ public class Main {
 			    Integer choixAttribut = 0;
 			    String choixProduit = "";
 
-			    ConsoleHelper.display(catController.get());
+			    ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit à modifier : ");
 			    choixProduit = scan.next();
 
 			    //Gestion des erreurs: mauvaise référence produit
-			    while(!choixProduit.equals(catController.getCat().retrieveProduit(choixProduit).getReference())){				
+			    while(!choixProduit.equals(catalogue.retrieveProduit(choixProduit).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
 				choixProduit = scan.next();
 			    }
@@ -182,17 +182,17 @@ public class Main {
 
 				case 1:
 				    ConsoleHelper.display("Veuillez rentrer le nouveau nom :");
-				    catController.getCat().retrieveProduit(choixProduit).setNom(scan.next());
+				    catalogue.retrieveProduit(choixProduit).setNom(scan.next());
 				    break;
 				case 2:				    
 				    ConsoleHelper.display("Veuillez rentrer la nouvelle description :");
 				    scan.nextLine();
-				    catController.getCat().retrieveProduit(choixProduit).setDescritpion(scan.nextLine());				    
+				    catalogue.retrieveProduit(choixProduit).setDescritpion(scan.nextLine());				    
 				    break;
 				case 3:
 				    ConsoleHelper.display("Veuillez rentrer la nouvelle description longue :");
 				    scan.nextLine();	//vider le Scanner
-				    catController.getCat().retrieveProduit(choixProduit).setDescripLongue(scan.nextLine());
+				    catalogue.retrieveProduit(choixProduit).setDescripLongue(scan.nextLine());
 				    break;
 				case 4:	
 				    double newPrix = 0.0;
@@ -215,15 +215,15 @@ public class Main {
 					    }
 					}
 				    }
-				    catController.getCat().retrieveProduit(choixProduit).setPrix(newPrix);
-				    ConsoleHelper.display("Le nouveau prix du produit référence : " + catController.getCat().retrieveProduit(choixProduit).getReference() +
+				    catalogue.retrieveProduit(choixProduit).setPrix(newPrix);
+				    ConsoleHelper.display("Le nouveau prix du produit référence : " + catalogue.retrieveProduit(choixProduit).getReference() +
 					    " est : " + newPrix + "€");
 				    break;
 				default:
 				    menu.messageErreur();
 				    break;
 			    }			    
-			    catController.sauvegarder();
+			    catalogue.save();
 			    break;
 
 			    //Choix : ajout d'un nouveau produit
@@ -237,7 +237,7 @@ public class Main {
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit : ");
 			    ref = scan.next();
 
-			    while(ref.equals(catController.getCat().retrieveProduit(ref).getReference())){				
+			    while(ref.equals(catalogue.retrieveProduit(ref).getReference())){				
 				ConsoleHelper.display("Cette référence existe déjà, veuillez choisir une autre référence");
 				ref = scan.next();
 			    }
@@ -270,20 +270,20 @@ public class Main {
 			    scan.nextLine(); //Vide le scanner
 			    ConsoleHelper.display("Veuillez rentrer la description longue du produit : ");
 			    descL = scan.nextLine();			    
-			    catController.getCat().ajouterProduit(new Produit(ref, nom, desc, descL, prix));
+			    catalogue.ajouterProduit(new Produit(ref, nom, desc, descL, prix));
 			    ConsoleHelper.display("Récapitulatif du produit ajouté => référence :" + ref + "| Nom : " + nom + "| Description : " + desc + "| Prix : " + prix + "€| Description longue : " + descL);
 			    break;
 
 			    //Choix : supprimer un produit
 			case 3:				    
-			    ConsoleHelper.display(catController.get());
+			    ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit à supprimer :");
 			    choixProduit = scan.next();
-			    while(!choixProduit.equals(catController.getCat().retrieveProduit(choixProduit).getReference())){
+			    while(!choixProduit.equals(catalogue.retrieveProduit(choixProduit).getReference())){
 				ConsoleHelper.display("Cette référence produit n'existe pas, veuillez recommencer :");
 				choixProduit = scan.next();
 			    }
-			    catController.getCat().supprimerProduit(catController.getCat().retrieveProduit(choixProduit));
+			    catalogue.supprimerProduit(catalogue.retrieveProduit(choixProduit));
 			    ConsoleHelper.display("Le produit référence : " + choixProduit + " a bien été supprimé.");
 			    break;
 
@@ -312,16 +312,16 @@ public class Main {
 			    }	
 
 			    if(choixDes == 1)
-				ConsoleHelper.display(catController.get());
+				ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    else
-				ConsoleHelper.display(catController.getCatComplet());
+				ConsoleHelper.display(catView.afficherCatComplet(catalogue));
 
 			    break;
 			default:
 			    menu.messageErreur();
 			    break;
 		    }
-		    catController.sauvegarder();
+		    catalogue.save();
 		    menu.afficherRetour();
 		    retour = scan.next();
 		}		
@@ -358,10 +358,10 @@ public class Main {
 			    String clientId = "";
 			    Integer choixModif = 0;
 
-			    ConsoleHelper.display(bddCont.get());
+			    ConsoleHelper.display(bddView.afficherBdd(bdd));
 			    ConsoleHelper.display("Quel est l'ID du client que vous souhaitez modifier ?");
 			    clientId = scan.next();
-			    while(!clientId.equals(bddCont.getBdd().retrieveClient(clientId).getId())){
+			    while(!clientId.equals(bdd.retrieveClient(clientId).getId())){
 				ConsoleHelper.display("ID inconnu, veuillez recommencer");
 				clientId = scan.next();
 			    }
@@ -390,19 +390,19 @@ public class Main {
 			    switch(choixModif){
 				case 1:
 				    ConsoleHelper.read(scan, "Veuillez rentrer le nouveau nom :");
-				    bddCont.getBdd().retrieveClient(clientId).setNom(scan.next());
+				    bdd.retrieveClient(clientId).setNom(scan.next());
 				    break;
 				case 2:
 				    ConsoleHelper.read(scan, "Veuillez rentrer le nouveau prénom :");
-				    bddCont.getBdd().retrieveClient(clientId).setPrenom(scan.next());
+				    bdd.retrieveClient(clientId).setPrenom(scan.next());
 				    break;
 				case 3:
 				    ConsoleHelper.display("Veuillez rentrer le nouveau numéro client :");
-				    bddCont.getBdd().retrieveClient(clientId).setNumero(scan.nextInt());
+				    bdd.retrieveClient(clientId).setNumero(scan.nextInt());
 				    break;
 				case 4:
 				    ConsoleHelper.display("Veuillez rentrer le nouveau code promotionnel :");
-				    bddCont.getBdd().retrieveClient(clientId).setCodePromo(scan.nextDouble());
+				    bdd.retrieveClient(clientId).setCodePromo(scan.nextDouble());
 				    break;
 				default:
 				    menu.messageErreur();
@@ -445,7 +445,7 @@ public class Main {
 				}
 			    }
 
-			    bddCont.getBdd().ajouterClient(new Person(idClient, nomClient, prenomClient, numeroClient, codePromo));
+			    bdd.ajouterClient(new Person(idClient, nomClient, prenomClient, numeroClient, codePromo));
 			    ConsoleHelper.display("Récapitulatif du client ajouté => ID : " + idClient + 
 				    "\n Nom : " + nomClient	+ 
 				    "\n Prénom : " + prenomClient + 
@@ -454,24 +454,24 @@ public class Main {
 			    break;			    
 			    //Choix : supprimer un client
 			case 3:			    			    
-			    ConsoleHelper.display(bddCont.get());
+			    ConsoleHelper.display(bddView.afficherBdd(bdd));
 			    ConsoleHelper.display("Veuillez rentrer l'ID du client à supprimer :");
 			    idClient = scan.next();
-			    while(!idClient.equals(bddCont.getBdd().retrieveClient(idClient).getId())){
+			    while(!idClient.equals(bdd.retrieveClient(idClient).getId())){
 				ConsoleHelper.display("Cet ID n'existe pas, veuillez recommencer :");
 				idClient = scan.next();
 			    }
-			    bddCont.getBdd().supprimerClient(bddCont.getBdd().retrieveClient(idClient));
+			    bdd.supprimerClient(bdd.retrieveClient(idClient));
 			    break;			    
 			    //Choix : afficher la liste des clients
 			case 4:
-			    ConsoleHelper.display(bddCont.get());
+			    ConsoleHelper.display(bddView.afficherBdd(bdd));
 			    break;
 			default:
 			    menu.messageErreur();
 			    break;
 		    }
-		    bddCont.sauvegarder();		    
+		    bdd.saveBdd();		    
 		    menu.afficherRetour();
 		    retour = scan.next();
 		}
@@ -491,10 +491,10 @@ public class Main {
 		/*
 		 * Retrouve le compte d'un client à partir de ses nom et prénom
 		 */
-		if(nomClient.equals(bddCont.retrouveClient(nomClient, prenomClient).getNom()) 
-			|| prenomClient.equals(bddCont.retrouveClient(nomClient, prenomClient).getPrenom())){
+		if(nomClient.equals(bdd.retrieveClient(nomClient, prenomClient).getNom()) 
+			|| prenomClient.equals(bdd.retrieveClient(nomClient, prenomClient).getPrenom())){
 		    ConsoleHelper.display(prenomClient + " " + nomClient + ", vous allez accéder à votre panier ....");
-		    panierCont.getPanier().setClient(bddCont.retrouveClient(nomClient, prenomClient));
+		    bdd.retrieveClient(nomClient, prenomClient).getPanier();
 
 		}
 		/*
@@ -502,9 +502,9 @@ public class Main {
 		 */
 		else{
 		    ConsoleHelper.display("Bienvenue " + prenomClient + " " + nomClient + ", votre compte vient d'être créé ...");
-		    clientId = String.valueOf(bddCont.getBdd().getBaseClients().size() + 1);
-		    bddCont.getBdd().ajouterClient(new Person(clientId, nomClient, prenomClient));
-		    panierCont.getPanier().setClient(bddCont.retrouveClient(nomClient, prenomClient));
+		    clientId = String.valueOf(bdd.getBaseClients().size() + 1);
+		    bdd.ajouterClient(new Person(clientId, nomClient, prenomClient));
+		    (new Panier()).setClient(bdd.retrieveClient(nomClient, prenomClient));
 		}
 		while(!retour.equals("n")){		   
 		    menu.affichageMenu(choixCat );
@@ -536,9 +536,9 @@ public class Main {
 			//Choix : ajout d'un produit avec quantité
 			case 1:			    			    
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit sélectionné :");
-			    ConsoleHelper.display(catController.get());
+			    ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    refP = scan.next();
-			    while(!refP.equals(catController.getCat().retrieveProduit(refP).getReference())){				
+			    while(!refP.equals(catalogue.retrieveProduit(refP).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
 				refP = scan.next();
 			    }
@@ -563,12 +563,12 @@ public class Main {
 				    }
 				}
 			    }
-			    if(!(bddCont.retrouveClient(nomClient, prenomClient).getPanier()).contains(catalogue.retrieveProduit(refP))){
-				bddCont.retrouveClient(nomClient, prenomClient).getPanier().add(catController.getCat().retrieveProduit(refP));
-				catController.getCat().retrieveProduit(refP).setQuantite(qteProd);
+			    if(!(bdd.retrieveClient(nomClient, prenomClient).getPanier()).contains(catalogue.retrieveProduit(refP))){
+				bdd.retrieveClient(nomClient, prenomClient).getPanier().add((catalogue.retrieveProduit(refP)).getItem());
+				catalogue.retrieveProduit(refP).getItem().setQuantite(qteProd);
 			    }
 			    else{
-				catController.getCat().retrieveProduit(refP).setQuantite(catController.getCat().retrieveProduit(refP).getQuantite() + qteProd);
+				catalogue.retrieveProduit(refP).getItem().setQuantite(catalogue.retrieveProduit(refP).getQuantite() + qteProd);
 			    }
 			    break;
 			    //Choix : supprimer un produit avec quantité
@@ -577,21 +577,21 @@ public class Main {
 			    String refProd = "";
 
 			    ConsoleHelper.display("Veuillez rentrer la référence du produit à supprimer :");
-			    ConsoleHelper.display(catController.get());
+			    ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    refProd = scan.next();
-			    while(!refProd.equals(catController.getCat().retrieveProduit(refProd).getReference())){				
+			    while(!refProd.equals(catalogue.retrieveProduit(refProd).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
 				refProd = scan.next();
 			    }
 			    ConsoleHelper.display("Veuillez rentrer le nombre de produits à supprimer :");
-			    while(qteP > catController.getCat().retrieveProduit(refProd).getQuantite()){
+			    while(qteP > catalogue.retrieveProduit(refProd).getQuantite()){
 
 				//Gestion des erreurs de saisie 
 				erreur = true;
 				while(erreur){ 
 				    try{
 					qteP = scan.nextInt();
-					if(qteP > catController.getCat().retrieveProduit(refProd).getQuantite()){
+					if(qteP > catalogue.retrieveProduit(refProd).getQuantite()){
 					    ConsoleHelper.display("Erreur, veuillez rentrer une quantité valide :");
 					    erreur = true;
 					}
@@ -604,18 +604,18 @@ public class Main {
 				    }
 				}
 			    }
-			    catController.getCat().retrieveProduit(refProd).setQuantite(catController.getCat().retrieveProduit(refProd).getQuantite() - qteP);			    
+			    catalogue.retrieveProduit(refProd).getItem().setQuantite(catalogue.retrieveProduit(refProd).getQuantite() - qteP);			    
 			    break;
 			    //Choix : afficher le panier avec la réduction et montant total
 			case 3:
-			    ConsoleHelper.display(panierCont.get());			    
+			    ConsoleHelper.display(panierView.afficherPanier(bdd.retrieveClient(nomClient, prenomClient)));			    
 			    ConsoleHelper.display("Montant de votre réduction :" +
-				    bddCont.retrouveClient(nomClient, prenomClient).montantPanier()* 
-				    bddCont.retrouveClient(nomClient, prenomClient).getCodePromo()/100 + "€");
+				    bdd.retrieveClient(nomClient, prenomClient).montantPanier()* 
+				    bdd.retrieveClient(nomClient, prenomClient).getCodePromo()/100 + "€");
 			    ConsoleHelper.display("Montant total de votre panier après réduction :" +
-				    (bddCont.retrouveClient(nomClient, prenomClient).montantPanier()
-					    - (bddCont.retrouveClient(nomClient, prenomClient).montantPanier()* 
-						    bddCont.retrouveClient(nomClient, prenomClient).getCodePromo()/100)) + "€\n");
+				    (bdd.retrieveClient(nomClient, prenomClient).montantPanier()
+					    - (bdd.retrieveClient(nomClient, prenomClient).montantPanier()* 
+						    bdd.retrieveClient(nomClient, prenomClient).getCodePromo()/100)) + "€\n");
 			    break;
 			    //Choix : valider son panier
 			case 4:
@@ -644,8 +644,8 @@ public class Main {
 
 			    if(validation == 1){
 				ConsoleHelper.display("Commande validée");				
-				bddCont.retrouveClient(nomClient, prenomClient).getPanier().addAll(panierCont.getPanier().getPanier());
-				bddCont.sauvegarder();				
+				bdd.retrieveClient(nomClient, prenomClient);	//Incomplet
+				bdd.saveBdd();				
 			    }
 			    else
 				ConsoleHelper.display("Vous avez abandonné la validation de votre commande");
@@ -657,7 +657,7 @@ public class Main {
 		    menu.afficherRetour();
 		    retour = scan.next();
 		}
-		bddCont.sauvegarder();
+		bdd.saveBdd();
 		break;		
 		//Si choix : Vendeur
 	    case 4:
@@ -667,7 +667,7 @@ public class Main {
 		    Integer qteProd = 0;
 		    String refP = "";
 
-		    ConsoleHelper.display(bddCont.get());
+		    ConsoleHelper.display(bddView.afficherBdd(bdd));
 		    ConsoleHelper.display("Veuillez rentrer l'identifiant client à traiter :");
 		    clientId = scan.next();
 		    while(!clientId.equals(bdd.retrieveClient(clientId).getId())){
@@ -698,10 +698,10 @@ public class Main {
 			//Choix : valider une commande
 			case 1:
 
-			    ConsoleHelper.display(catController.get());
+			    ConsoleHelper.display(catView.afficherCatalogue(catalogue));
 			    ConsoleHelper.read(scan, "Veuillez rentrer la référence du produit sélectionné :");
 			    refP = scan.next();
-			    while(!refP.equals(catController.getCat().retrieveProduit(refP).getReference())){				
+			    while(!refP.equals(catalogue.retrieveProduit(refP).getReference())){				
 				ConsoleHelper.display("Cette référence n'existe pas, veuillez recommencer :");
 				refP = scan.next();
 			    }
@@ -711,24 +711,24 @@ public class Main {
 				ConsoleHelper.display("Erreur quantité, veuillez rentrer une quantité positive :");
 				qteProd = scan.nextInt();
 			    }
-			    if(!bddCont.getBdd().retrieveClient(clientId).getPanier().contains(catController.getCat().retrieveProduit(refP))){
-				bddCont.getBdd().retrieveClient(clientId).getPanier().add(catController.getCat().retrieveProduit(refP));
-				catController.getCat().retrieveProduit(refP).setQuantite(qteProd);
+			    if(!bdd.retrieveClient(clientId).getPanier().contains(catalogue.retrieveProduit(refP))){
+				bdd.retrieveClient(clientId).getPanier().add((catalogue.retrieveProduit(refP)).getItem());
+				catalogue.retrieveProduit(refP).getItem().setQuantite(qteProd);
 			    }
 			    else{
-				catController.getCat().retrieveProduit(refP).setQuantite(catController.getCat().retrieveProduit(refP).getQuantite() + qteProd);
+				catalogue.retrieveProduit(refP).getItem().setQuantite(catalogue.retrieveProduit(refP).getQuantite() + qteProd);
 			    }
 			    break;
 			    //Choix : afficher liste des produits achetés par le client
 			case 2:			    
-			    ConsoleHelper.display(panierCont.getPanierView().afficherCommandes((bddCont.getBdd().retrieveClient(clientId))));
+			    ConsoleHelper.display(panierView.afficherCommandes((bdd.retrieveClient(clientId))));
 			    break;
 			default:
 			    menu.messageErreur();
 			    break;
 		    }	
-		    bddCont.sauvegarder();
-		    catController.sauvegarder();
+		    bdd.saveBdd();
+		    catalogue.save();
 		    menu.afficherRetour();
 		    retour = scan.next();
 		}

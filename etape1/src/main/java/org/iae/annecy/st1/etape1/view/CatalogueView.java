@@ -1,13 +1,13 @@
 package org.iae.annecy.st1.etape1.view;
 
-import org.iae.annecy.st1.etape1.controller.CatalogueController;
 import org.iae.annecy.st1.etape1.model.produit.Catalogue;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 
 public class CatalogueView{
     
     private ProduitView prodV = new ProduitView();
-    public CatalogueView(CatalogueController catCont){
+    
+    public CatalogueView(){
 	super();
     }
     

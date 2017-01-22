@@ -1,12 +1,11 @@
 package org.iae.annecy.st1.etape1.view;
 
-import org.iae.annecy.st1.etape1.controller.PanierController;
+import org.iae.annecy.st1.etape1.model.panier.Item;
 import org.iae.annecy.st1.etape1.model.person.Person;
-import org.iae.annecy.st1.etape1.model.produit.Produit;
 
 public class PanierView{
     
-    public PanierView(PanierController panierCont){
+    public PanierView(){
 	super();
     }
     
@@ -16,17 +15,19 @@ public class PanierView{
      * @param p
      * 		le client à qui appartient le panier
      * @return La liste des produits du panier 
-     */
-    public String afficherPanier(Person p){
-	String text = "Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit :\n";
-	double total = 0;
-	for (Produit produit : p.getPanier()) {
-	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantite() + "\t\t" + 
-		    + produit.getQuantite()*produit.getPrix() + "€\n";
-	    total += produit.getQuantite()*produit.getPrix();
+     */    
+    public String afficherPanier(Person person){
+	StringBuffer sb = new StringBuffer("Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit :");
+	System.getProperty("line.separator");
+	Double total = 0.0;
+	for (Item item : person.getPanier()) {
+	    sb.append(item.getProduit().getReference()) .append("\t\t") .append(item.getProduit().getNom()) .append("\t\t") .append(item.getProduit().getPrix()) .append("€\t\t") .append(item.getQuantite()) .append("\t\t")  
+	    .append(item.getQuantite()*item.getProduit().getPrix());
+	    System.getProperty("line.separator");
+	    total += item.getQuantite()*item.getProduit().getPrix();
 	}
-	text += "\nMontant total du panier avant réduction : " + total + "€";
-	return text;
+	sb.append("\nMontant total du panier avant réduction : ") .append(total) .append("€");
+	return sb.toString();
     }
     /**
      * Affiche le panier qui a été validé
@@ -35,13 +36,15 @@ public class PanierView{
      * 		Le client à qui appartient la commande
      * @return La liste des produits qu'il a commandé
      */
-    public String afficherCommandes(Person p){
-	String text = "Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit :\n";
-	for (Produit produit : p.getPanier()) {
-	    text += produit.getReference() + "\t\t" + produit.getNom() + "\t\t" + produit.getPrix() + "€\t\t" + produit.getQuantite() + "\t\t" + 
-		    + produit.getQuantite()*produit.getPrix() + "€\n";
+    public String afficherCommandes(Person person){
+	StringBuffer sb = new StringBuffer("Réf :\t\tNom :\t\tPrix :\t\tQté :\t\tPrix total par produit");
+	System.getProperty("line.separator");
+	for (Item item : person.getPanier()) {
+	    sb.append(item.getProduit().getReference()) .append("\t\t") .append(item.getProduit().getNom()) .append("\t\t") .append(item.getProduit().getPrix()) .append("€\t\t") 
+	    .append(item.getQuantite()) .append("\t\t") .append(item.getQuantite()*item.getProduit().getPrix()) .append("€");
+	    System.getProperty("line.separator");
 	}
-	return text;
+	return sb.toString();
     }
     
     

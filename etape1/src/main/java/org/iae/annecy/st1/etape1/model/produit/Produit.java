@@ -1,23 +1,29 @@
 package org.iae.annecy.st1.etape1.model.produit;
 
-@SuppressWarnings("serial")
+import org.iae.annecy.st1.etape1.model.panier.Item;
+
 public class Produit implements java.io.Serializable{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 685930115586177076L;
     private String reference, descritpion, nom, descripLongue;
-    private double prix;
-    private int quantite;
+    private Double prix;
+    private Integer quantite;
+    private Item item;
 
     public Produit(){	
     }
 
-    public Produit(String reference,String nom, String description, double prix){
+    public Produit(String reference,String nom, String description, Double prix){
 	this.reference = reference;
 	this.nom = nom;
 	this.descritpion = description;
 	this.prix = prix;
     }
 
-    public Produit(String reference,String nom, String description, String descL, double prix){
+    public Produit(String reference,String nom, String description, String descL, Double prix){
 	this.reference = reference;
 	this.nom = nom;
 	this.descritpion = description;
@@ -25,11 +31,11 @@ public class Produit implements java.io.Serializable{
 	this.prix = prix;
     }
 
-    public double getPrix() {
+    public Double getPrix() {
 	return prix;
     }
 
-    public void setPrix(double prix) {
+    public void setPrix(Double prix) {
 	this.prix = prix;
     }
 
@@ -64,11 +70,12 @@ public class Produit implements java.io.Serializable{
     public void setNom(String nom) {
 	this.nom = nom;
     }
-    public int getQuantite() {
+    public Integer getQuantite() {
 	return quantite;
     }
-    public void setQuantite(int quantite) {
-	this.quantite = quantite;
-    }    
+       
+    public Item getItem(){
+	return item;
+    }
 
 }

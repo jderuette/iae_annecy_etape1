@@ -10,9 +10,10 @@ public class PersonView{
      * 		le client concerné
      * @return une description du client sous forme de chaine de texte
      */
-    public String affichageClients(Person p){
-	String text = "id : " + p.getId() + ", Nom : " + p.getNom() + ", Prénom : " + p.getPrenom()
-		+ ", Numéro Client :" + p.getNumero() + ", Code promotionnel : " + p.getCodePromo() + "%";
-	return text;
+    public String affichageClients(Person person){
+	StringBuffer sb = new StringBuffer("id : ");
+	sb.append(person.getId()) .append(", Nom : ") .append(person.getNom()) .append(", Prénom : ") .append(person.getPrenom())
+		.append(", Numéro Client :") .append(person.getNumero()) .append(", Code promotionnel : ") .append(person.getCodePromo()) .append("%");
+	return sb.toString();
     }
 }

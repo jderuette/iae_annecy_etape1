@@ -7,9 +7,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-@SuppressWarnings("serial")
 public class BaseDeDonnees implements Serializable{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -776100007237607266L;
     private ArrayList<Person> baseClients = new ArrayList<Person>();
 
     public ArrayList<Person> getBaseClients() {
@@ -75,14 +78,22 @@ public class BaseDeDonnees implements Serializable{
     /**
      * Sérialise la base de données clients
      */
-    @SuppressWarnings("resource")
+   
     public void saveBdd(){
+	ObjectOutputStream oos = null;
 	try{
 	    FileOutputStream fos = new FileOutputStream("clients.ser");
-	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    oos = new ObjectOutputStream(fos);
 	    oos.writeObject(this);
 	}catch (IOException ioe){
 	    ioe.printStackTrace();
+	}finally {
+	    try {
+		oos.close();
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	}
     }
 

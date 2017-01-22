@@ -43,7 +43,7 @@ public class MenuView{
 			+ "\t2. Consulter la liste des produits achetés";
 		break;
 	    default:
-		this.messageErreur();
+		message = this.messageErreur();
 	}
 	ConsoleHelper.display(message);
     }
@@ -95,9 +95,8 @@ public class MenuView{
     /**
      * Affiche un message d'erreur
      */
-    public void messageErreur(){
-	String message = "Commande invalide, veuillez recommencer :";
-	ConsoleHelper.display(message);
+    public String messageErreur(){
+	return "Commande invalide, veuillez recommencer :";
     }
 
     /**

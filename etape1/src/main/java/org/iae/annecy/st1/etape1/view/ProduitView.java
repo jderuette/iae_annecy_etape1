@@ -11,9 +11,10 @@ public class ProduitView{
      * 		le produit concerné
      * @return une chaine de texte
      */
-    public String affichageProduit(Produit p){
-	String text = "Produit de référence : " + p.getReference() + "| Nom : " + p.getNom() + "| Description : " + p.getDescritpion() + "| Prix : " + p.getPrix() + "€ ";
-	return text;
+    public String affichageProduit(Produit produit){
+	StringBuffer sb = new StringBuffer("Produit de référence : ");
+	sb.append(produit.getReference()) .append("| Nom : ") .append(produit.getNom()) .append("| Description : ") .append(produit.getDescritpion()) .append("| Prix : " + produit.getPrix()) .append("€ ");
+	return sb.toString();
     }
     
     /**
@@ -23,10 +24,11 @@ public class ProduitView{
      * 		le produit concerné
      * @return une chaine de texte
      */
-    public String affichageProdComplet(Produit p){
-	String text = "Produit de référence : " + p.getReference() + "| Nom : " + p.getNom() + "| Description : " + p.getDescritpion() + "| Prix : " + p.getPrix() +
-		"€ | Description longue : " + p.getDescripLongue();
-	return text;
+    public String affichageProdComplet(Produit produit){
+	StringBuffer sb = new StringBuffer("Produit de référence : ");
+	sb.append(produit.getReference()) .append("| Nom : ") .append(produit.getNom()) .append("| Description : ") .append(produit.getDescritpion()) .append("| Prix : ") .append(produit.getPrix())
+		.append("€ | Description longue : ") .append(produit.getDescripLongue());
+	return sb.toString();
     }
 
 }
